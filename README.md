@@ -7,4 +7,7 @@ crontab配置：
   crontab -e
   //内容为
   * * * * * sleep 3; sh /var/spool/cron/net.sh 
+
+创建通信文件：
   
+  date +%d%H%M%S  > /tmp/spool/cron/read
