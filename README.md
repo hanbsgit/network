@@ -11,3 +11,7 @@ crontab配置：
 创建通信文件：
   
   date +%d%H%M%S  > /tmp/spool/cron/read
+  
+  
+  
+#移动宽带共享防检测：https://www.xavier.wang/post/45-suck-shit-lan/#user-agent-%E6%A3%80%E6%B5%8B
