@@ -1,0 +1,15 @@
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118
+
+iptables -t mangle -A PREROUTING -i eth0.2 -j TTL --ttl-set 64 //修改 WAN 口 TTL 值
+iptables -t mangle -A PREROUTING -i br-lan -j TTL --ttl-set 64 //修改 LAN 口 TTL 值
+iptables -t mangle -A PREROUTING -i pppoe-wan -j TTL --ttl-set 64
+
+iptables -t nat -N ntp_force_local
+iptables -t nat -I PREROUTING -p udp --dport 123 -j ntp_force_local
+iptables -t nat -A ntp_force_local -d 0.0.0.0/8 -j RETURN
+iptables -t nat -A ntp_force_local -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A ntp_force_local -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A ntp_force_local -s 192.168.0.0/16 -j DNAT --to-destination 192.168.1.1
+
+//防移动校园宽带共享检测
+//防火墙
